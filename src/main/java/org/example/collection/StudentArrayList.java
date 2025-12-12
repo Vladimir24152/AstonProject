@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.Consumer;
+import java.util.stream.StreamSupport;
 
 public class StudentArrayList implements StudentList, Iterable<Student>{
 
@@ -86,6 +87,6 @@ public class StudentArrayList implements StudentList, Iterable<Student>{
     }
 
     public java.util.stream.Stream<Student> stream() {
-        return java.util.stream.StreamSupport.stream(spliterator(), false);
+        return StreamSupport.stream(spliterator(), false);
     }
 }
