@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.collection.StudentArrayList;
 import org.example.collection.StudentList;
 import org.example.io.printer.StudentPrinter;
 import org.example.io.printer.impl.PrintStudentsToConsole;
@@ -8,6 +9,7 @@ import org.example.io.scanner.StudentScanner;
 import org.example.io.scanner.impl.ScanStudentsFromConsole;
 import org.example.io.scanner.impl.ScanStudentsFromFile;
 import org.example.io.scanner.impl.ScanStudentsRandom;
+import org.example.model.Student;
 import org.example.sorter.StudentSorter;
 import org.example.sorter.impl.BaseSortStudents;
 import org.example.sorter.impl.CustomSortStudents;
@@ -28,33 +30,66 @@ public class Main {
     static BufferedReader consoleReader;
 
     public static void main(String[] args) {
-            consoleReader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            while (isRunning){
-                studentScanner = toChooseStudentScanner();
-                if (!isRunning) break;
-                countStudentForScan = requestingCountToScan();
-                studentList = studentScanner.getStudents(countStudentForScan);
+        StudentList list = new StudentArrayList();
+        list.add(new Student.Builder("Name1","LastName1",3,3.1,"206")
+                .buildAge(20)
+                .buildAddress("Street1")
+                .build());
+        list.add(new Student.Builder("Name1","LastName1",3,3.1,"105")
+                .buildAge(20)
+                .buildAddress("Street1")
+                .build());
+        list.add(new Student.Builder("Name1","LastName1",2,3.1,"104")
+                .buildAge(20)
+                .buildAddress("Street1")
+                .build());
+        list.add(new Student.Builder("Name1","LastName1",2,2.1,"103")
+                .buildAge(20)
+                .buildAddress("Street1")
+                .build());
+        list.add(new Student.Builder("Name1","LastName1",1,2.1,"102")
+                .buildAge(20)
+                .buildAddress("Street1")
+                .build());
+        list.add(new Student.Builder("Name1","LastName1",1,1.1,"101")
+                .buildAge(20)
+                .buildAddress("Street1")
+                .build());
 
-                studentSorter = toChooseStudentSorter();
-                sortedStudentList = studentSorter.sortStudents(studentList);
 
-                studentPrinter = toChooseStudentPrinter();
-                studentPrinter.printStudents(sortedStudentList);
-                System.out.println("Список студентов отсортирован!");
-                System.out.println();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }finally {
-            if (consoleReader != null) {
-                try {
-                    consoleReader.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
+        list.stream()
+                .sorted()
+                .forEach(System.out::println);
+
+
+
+//            consoleReader = new BufferedReader(new InputStreamReader(System.in));
+//        try {
+//            while (isRunning){
+//                studentScanner = toChooseStudentScanner();
+//                if (!isRunning) break;
+//                countStudentForScan = requestingCountToScan();
+//                studentList = studentScanner.getStudents(countStudentForScan);
+//
+//                studentSorter = toChooseStudentSorter();
+//                sortedStudentList = studentSorter.sortStudents(studentList);
+//
+//                studentPrinter = toChooseStudentPrinter();
+//                studentPrinter.printStudents(sortedStudentList);
+//                System.out.println("Список студентов отсортирован!");
+//                System.out.println();
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }finally {
+//            if (consoleReader != null) {
+//                try {
+//                    consoleReader.close();
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        }
     }
 
     private static StudentScanner toChooseStudentScanner() {

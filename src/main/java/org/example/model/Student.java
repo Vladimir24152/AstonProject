@@ -1,16 +1,16 @@
 package org.example.model;
 
-public class Student {
+public class Student implements Comparable<Student>{
 
     private String name;
     private String lastname;
     private Integer groupNumber;
     private Double averageScore;
-    private String creditCardNumber;
+    private String gradeBookNumber;
     private Integer age;
     private String address;
 
-//    Реализация паттерна Builder через статический внутренний класс
+    //    Реализация паттерна Builder через статический внутренний класс
     public static class Builder {
         private String name;
         private String lastname;
@@ -20,12 +20,12 @@ public class Student {
         private Integer age = 0;
         private String address = "address unknown";
 
-        public Builder(String name, String lastname, Integer groupNumber, Double averageScore, String creditCardNumber) {
+        public Builder(String name, String lastname, Integer groupNumber, Double averageScore, String gradeBookNumber) {
             this.name = name;
             this.lastname = lastname;
             this.groupNumber = groupNumber;
             this.averageScore = averageScore;
-            this.gradeBookNumber = creditCardNumber;
+            this.gradeBookNumber = gradeBookNumber;
         }
 
 //        Методы build для необязательных полей
@@ -49,7 +49,7 @@ public class Student {
         this.lastname =builder.lastname;
         this.groupNumber =builder.groupNumber;
         this.averageScore =builder.averageScore;
-        this.creditCardNumber =builder.gradeBookNumber;
+        this.gradeBookNumber =builder.gradeBookNumber;
         this.age = builder.age;
         this.address = builder.address;
     }
@@ -61,9 +61,26 @@ public class Student {
                 ", lastname='" + lastname + '\'' +
                 ", groupNumber=" + groupNumber +
                 ", averageScore=" + averageScore +
-                ", creditCardNumber='" + creditCardNumber + '\'' +
+                ", gradeBookNumber='" + gradeBookNumber + '\'' +
                 ", age=" + age +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        if (this.groupNumber > o.groupNumber){
+            return 1;
+        }else if (this.groupNumber < o.groupNumber){
+            return -1;
+        }else {
+            if (this.averageScore > o.averageScore){
+                return 1;
+            }else if (this.averageScore < o.averageScore){
+                return -1;
+            }else {
+                return this.gradeBookNumber.compareTo(o.gradeBookNumber);
+            }
+        }
     }
 }
