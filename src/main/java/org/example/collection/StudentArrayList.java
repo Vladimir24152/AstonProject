@@ -10,7 +10,16 @@ public class StudentArrayList implements StudentList{
 
     @Override
     public void add(Student student) {
-
+        if (size == students.length){
+            CAPACITY = CAPACITY * 2;
+            Student[] newStudents = new Student[CAPACITY];
+            for (int i = 0; i < students.length; i++){
+                newStudents[i] = students[i];
+            }
+            students = newStudents;
+        }
+        students[size] = student;
+        size++;
     }
 
     @Override
