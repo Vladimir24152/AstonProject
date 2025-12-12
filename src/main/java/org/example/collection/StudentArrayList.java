@@ -4,9 +4,11 @@ import org.example.model.Student;
 
 public class StudentArrayList implements StudentList{
 
-    Student[] students = new Student[10];
+    private Integer CAPACITY = 10;
 
-    Integer size;
+    private Student[] students = new Student[CAPACITY];
+
+    private Integer size = 0;
 
     @Override
     public void add(Student student) {
@@ -24,11 +26,11 @@ public class StudentArrayList implements StudentList{
 
     @Override
     public void clean() {
-
+        students = new Student[10];
     }
 
     @Override
     public Student get(Integer index) {
-        return null;
+        return students[index];
     }
 }
