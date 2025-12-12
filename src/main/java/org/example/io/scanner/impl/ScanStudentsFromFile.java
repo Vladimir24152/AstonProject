@@ -1,5 +1,6 @@
 package org.example.io.scanner.impl;
 
+import org.example.collection.StudentArrayList;
 import org.example.collection.StudentList;
 import org.example.io.TxtUtils;
 import org.example.io.scanner.ScanStudents;
@@ -12,7 +13,7 @@ public class ScanStudentsFromFile implements ScanStudents {
 
     @Override
     public StudentList scanStudents(Integer count) {
-
+        StudentList result = new StudentArrayList();
         String dataFromTxt = TxtUtils.readFile("students_demo.txt");
         List<String> students = Arrays.asList(dataFromTxt.split("\\s*;\\s*"));
 
@@ -36,8 +37,8 @@ public class ScanStudentsFromFile implements ScanStudents {
                     .buildAddress(address)
                     .build();
             // Добавить студента в коллекцию
-
+            result.add(student);
         }
-        return null;
+        return result;
     }
 }
