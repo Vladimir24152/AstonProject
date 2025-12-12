@@ -96,7 +96,7 @@ public class Main {
     }
 
     private static StudentSorter toChooseStudentSorter() {
-        while (true) {
+        while (isRunning) {
             String string = getDataFromTheUser(
                     "Выберите способ сортировки списка студентов (введите число):",
                     "1 - Стандартная сортировка по 3 полям (Номер группы, Средний балл, Номер зачетной книжки);",
@@ -115,10 +115,11 @@ public class Main {
                     System.out.println("Ведено неверное значение, повторите попытку");
             }
         }
+        return null;
     }
 
     private static StudentPrinter toChooseStudentPrinter() {
-        while (true) {
+        while (isRunning) {
             String string = getDataFromTheUser(
                     "Выберите место сохранения отсортированного списка студентов (введите число):",
                     "1 - в файл;",
@@ -137,6 +138,7 @@ public class Main {
                     System.out.println("Ведено неверное значение, повторите попытку");
             }
         }
+        return null;
     }
 
     private static String getDataFromTheUser(String ... lines){

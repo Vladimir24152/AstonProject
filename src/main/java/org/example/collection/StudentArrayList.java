@@ -8,7 +8,7 @@ public class StudentArrayList implements StudentList{
 
     private Student[] students = new Student[CAPACITY];
 
-    private Integer size;
+    private Integer size = 0;
 
     @Override
     public void add(Student student) {
@@ -32,5 +32,10 @@ public class StudentArrayList implements StudentList{
     @Override
     public Student get(Integer index) {
         return students[index];
+    }
+
+    @Override
+    public Integer size() {
+        return size;
     }
 }
