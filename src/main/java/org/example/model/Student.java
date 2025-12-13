@@ -54,6 +54,10 @@ public class Student implements Comparable<Student>{
         this.address = builder.address;
     }
 
+    public Integer getGroupNumber() {
+        return groupNumber;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
