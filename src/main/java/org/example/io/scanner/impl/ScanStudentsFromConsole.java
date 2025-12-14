@@ -2,6 +2,7 @@ package org.example.io.scanner.impl;
 
 import org.example.collection.StudentArrayList;
 import org.example.collection.StudentList;
+import org.example.exceptions.IllegalStudentException;
 import org.example.io.scanner.ScanStudents;
 import org.example.model.Student;
 
@@ -25,11 +26,21 @@ public class ScanStudentsFromConsole implements ScanStudents {
             Integer age = Integer.parseInt(elements[5]);
             String address = elements[6];
 
-            students.add(new Student.Builder(name, lastName, groupNumber, averageScore, gradeBookNumber)
-                            .buildAge(age)
-                            .buildAddress(address)
-                            .build()
-            );
+            Student student;
+            try {
+                student = new Student.Builder(name, lastName, groupNumber, averageScore, gradeBookNumber)
+                        .buildAge(age)
+                        .buildAddress(address)
+                        .build();
+            } catch (IllegalStudentException e) {
+                System.err.println(e.getMessage());
+                System.out.println("Попробуйте ввести данные заново");
+
+                i--;        // откат счетчика назад для новой попытки
+                continue;
+            }
+
+            students.add(student);
         }
 
         return students;
