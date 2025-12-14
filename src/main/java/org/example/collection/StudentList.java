@@ -9,4 +9,6 @@ public interface StudentList {
     void clean();
 
     Student get(Integer index);
+
+    int size();
 }
