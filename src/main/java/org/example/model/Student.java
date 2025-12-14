@@ -6,7 +6,7 @@ public class Student {
     private String lastname;
     private Integer groupNumber;
     private Double averageScore;
-    private String creditCardNumber;
+    private Integer gradeBookNumber;
     private Integer age;
     private String address;
 
@@ -16,16 +16,16 @@ public class Student {
         private String lastname;
         private Integer groupNumber;
         private Double averageScore;
-        private String gradeBookNumber;
+        private Integer gradeBookNumber; //был тип переменной String, название "creditCardNumber"
         private Integer age = 0;
         private String address = "address unknown";
 
-        public Builder(String name, String lastname, Integer groupNumber, Double averageScore, String creditCardNumber) {
+        public Builder(String name, String lastname, Integer groupNumber, Double averageScore, Integer gradeBookNumber) {
             this.name = name;
             this.lastname = lastname;
             this.groupNumber = groupNumber;
             this.averageScore = averageScore;
-            this.gradeBookNumber = creditCardNumber;
+            this.gradeBookNumber = gradeBookNumber;
         }
 
 //        Методы build для необязательных полей
@@ -49,7 +49,7 @@ public class Student {
         this.lastname =builder.lastname;
         this.groupNumber =builder.groupNumber;
         this.averageScore =builder.averageScore;
-        this.creditCardNumber =builder.gradeBookNumber;
+        this.gradeBookNumber =builder.gradeBookNumber;
         this.age = builder.age;
         this.address = builder.address;
     }
@@ -61,7 +61,7 @@ public class Student {
                 ", lastname='" + lastname + '\'' +
                 ", groupNumber=" + groupNumber +
                 ", averageScore=" + averageScore +
-                ", creditCardNumber='" + creditCardNumber + '\'' +
+                ", gradeBookNumber='" + gradeBookNumber + '\'' +
                 ", age=" + age +
                 ", address='" + address + '\'' +
                 '}';
