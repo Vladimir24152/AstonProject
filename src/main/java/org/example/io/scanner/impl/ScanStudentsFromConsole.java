@@ -1,48 +1,43 @@
 package org.example.io.scanner.impl;
 
-import org.example.collection.StudentArrayList;
+import org.example.collection.StudentArrayListCollector;
 import org.example.collection.StudentList;
 import org.example.exceptions.IllegalStudentException;
 import org.example.io.scanner.ScanStudents;
+import org.example.mapper.StudentMapper;
+import org.example.mapper.StudentMapperImpl;
 import org.example.model.Student;
 
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class ScanStudentsFromConsole implements ScanStudents {
+    StudentMapper studentMapper = new StudentMapperImpl();
+    Scanner scanner = new Scanner(System.in);
+
     @Override
     public StudentList scanStudents(Integer count) {
-        Scanner scanner = new Scanner(System.in);
-        StudentList students = new StudentArrayList();
+        StudentList students = Stream.generate(this::scanStudent)
+                .limit(count)
+                .collect(new StudentArrayListCollector());
 
-        for (int i = 0; i < count; i++) {
-            String studentString = scanner.nextLine();
-            String[] elements = studentString.split(";")[0].split("\\|");
+        return students;
+    }
 
-            String name = elements[0];
-            String lastName = elements[1];
-            Integer groupNumber = Integer.parseInt(elements[2]);
-            Double averageScore = Double.parseDouble(elements[3]);
-            String gradeBookNumber = elements[4];
-            Integer age = Integer.parseInt(elements[5]);
-            String address = elements[6];
+    private Student scanStudent() {
+        Student student = null;
 
-            Student student;
+        // цикл, пока не будет создан корректный студент
+        do {
             try {
-                student = new Student.Builder(name, lastName, groupNumber, averageScore, gradeBookNumber)
-                        .buildAge(age)
-                        .buildAddress(address)
-                        .build();
+                String studentString = scanner.nextLine();
+                student = studentMapper.toStudent(studentString);
             } catch (IllegalStudentException e) {
                 System.err.println(e.getMessage());
                 System.out.println("Попробуйте ввести данные заново");
-
-                i--;        // откат счетчика назад для новой попытки
-                continue;
             }
+        } while (student == null);
 
-            students.add(student);
-        }
-
-        return students;
+        return student;
     }
 }
