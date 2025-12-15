@@ -29,7 +29,13 @@ public class ScanStudentsFromFile implements ScanStudents {
         List<String> students = Arrays.asList(dataFromTxt.split("\\s*;\\s*"));
 
         result = students.stream()
-                .map(string -> studentMapper.toStudent(string))
+                .map(string -> {
+                    try {
+                        return studentMapper.toStudent(string);
+                    } catch (IllegalStudentException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .limit(count)
                 .collect(new StudentArrayListCollector());
 

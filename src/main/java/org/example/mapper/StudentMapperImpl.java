@@ -5,7 +5,7 @@ import org.example.model.Student;
 
 public class StudentMapperImpl implements StudentMapper{
 
-    public Student toStudent(String string) {
+    public Student toStudent(String string) throws IllegalStudentException {
 
         String[] element = string.split("\\|");
 
@@ -17,15 +17,11 @@ public class StudentMapperImpl implements StudentMapper{
         Integer age = Integer.valueOf(element[5]);
         String address = element[6];
 
-        Student student;
-        try {
-            student = new Student.Builder(name, lastname, groupNumber, averageScore, gradeBookNumber)
-                    .buildAge(age)
-                    .buildAddress(address)
-                    .build();
-        } catch (IllegalStudentException e) {
-            throw new RuntimeException(e);
-        }
+        Student student = new Student.Builder(name, lastname, groupNumber, averageScore, gradeBookNumber)
+                .buildAge(age)
+                .buildAddress(address)
+                .build();
+
         return student;
     }
 }
