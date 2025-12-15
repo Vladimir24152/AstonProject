@@ -33,4 +33,8 @@ public class StudentArrayList implements StudentList{
     public Student get(Integer index) {
         return students[index];
     }
+
+    public int size() {
+        return this.size;
+    }
 }
