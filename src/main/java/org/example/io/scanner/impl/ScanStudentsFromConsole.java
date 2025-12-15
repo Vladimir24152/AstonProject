@@ -16,7 +16,7 @@ public class ScanStudentsFromConsole implements ScanStudents {
 
         for (int i = 0; i < count; i++) {
             String studentString = scanner.nextLine();
-            String[] elements = studentString.split("\\|");
+            String[] elements = studentString.split(";")[0].split("\\|");
 
             String name = elements[0];
             String lastName = elements[1];
