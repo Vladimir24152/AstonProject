@@ -2,7 +2,7 @@ package org.example.model;
 
 import org.example.exceptions.IllegalStudentException;
 
-public class Student {
+public class Student implements Comparable<Student>{
 
     private String name;
     private String lastname;
@@ -12,7 +12,7 @@ public class Student {
     private Integer age;
     private String address;
 
-//    Реализация паттерна Builder через статический внутренний класс
+    //    Реализация паттерна Builder через статический внутренний класс
     public static class Builder {
         private String name;
         private String lastname;
@@ -78,6 +78,10 @@ public class Student {
         this.address = builder.address;
     }
 
+    public Integer getGroupNumber() {
+        return groupNumber;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -89,5 +93,22 @@ public class Student {
                 ", age=" + age +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        if (this.groupNumber > o.groupNumber){
+            return 1;
+        }else if (this.groupNumber < o.groupNumber){
+            return -1;
+        }else {
+            if (this.averageScore > o.averageScore){
+                return 1;
+            }else if (this.averageScore < o.averageScore){
+                return -1;
+            }else {
+                return this.gradeBookNumber.compareTo(o.gradeBookNumber);
+            }
+        }
     }
 }

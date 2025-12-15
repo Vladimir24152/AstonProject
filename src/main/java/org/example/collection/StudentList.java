@@ -2,6 +2,8 @@ package org.example.collection;
 
 import org.example.model.Student;
 
+import java.util.stream.Stream;
+
 public interface StudentList {
 
     void add(Student student);
@@ -10,5 +12,7 @@ public interface StudentList {
 
     Student get(Integer index);
 
-    int size();
+    Integer size();
+
+    Stream<Student> stream();
 }

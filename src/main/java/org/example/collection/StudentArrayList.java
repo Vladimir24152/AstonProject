@@ -2,7 +2,14 @@ package org.example.collection;
 
 import org.example.model.Student;
 
-public class StudentArrayList implements StudentList{
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
+import java.util.stream.StreamSupport;
+
+public class StudentArrayList implements StudentList, Iterable<Student>{
 
     private Integer CAPACITY = 10;
 
@@ -27,6 +34,7 @@ public class StudentArrayList implements StudentList{
     @Override
     public void clean() {
         students = new Student[10];
+        size = 0;
     }
 
     @Override
@@ -34,7 +42,51 @@ public class StudentArrayList implements StudentList{
         return students[index];
     }
 
-    public int size() {
-        return this.size;
+    @Override
+    public Integer size() {
+        return size;
+    }
+
+    @Override
+    public Iterator<Student> iterator() {
+        return new StudentIterator();
+    }
+
+    private class StudentIterator implements Iterator<Student> {
+        private int currentIndex = 0;
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < size;
+        }
+
+        @Override
+        public Student next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return students[currentIndex++];
+        }
+    }
+
+    @Override
+    public void forEach(Consumer<? super Student> action) {
+        for (Student student : this) {
+            action.accept(student);
+        }
+    }
+
+    @Override
+    public Spliterator<Student> spliterator() {
+        return Spliterators.spliterator(
+                students,
+                0,
+                size,
+                Spliterator.ORDERED | Spliterator.IMMUTABLE
+        );
+    }
+
+    public java.util.stream.Stream<Student> stream() {
+        return StreamSupport.stream(spliterator(), false);
     }
 }
