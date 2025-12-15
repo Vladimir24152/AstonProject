@@ -48,8 +48,8 @@ public class Student implements Comparable<Student>{
 
 //        Методы build для необязательных полей
         public Builder buildAge(Integer age) throws IllegalStudentException {
-            if (age < 0)
-                throw new IllegalStudentException("Возраст должен быть как минимум больше нуля");
+            if (age < 16)
+                throw new IllegalStudentException("Возраст должен быть больше или равен 16");
             this.age = age;
 
             return this;
