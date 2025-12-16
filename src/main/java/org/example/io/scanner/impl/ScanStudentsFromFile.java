@@ -7,11 +7,12 @@ import org.example.exceptions.IllegalStudentException;
 import org.example.io.TxtUtils;
 import org.example.io.scanner.ScanStudents;
 import org.example.mapper.StudentMapperImpl;
-import org.example.model.Student;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ScanStudentsFromFile implements ScanStudents {
 
@@ -28,16 +29,22 @@ public class ScanStudentsFromFile implements ScanStudents {
         String dataFromTxt = TxtUtils.readFile(String.format("%s", fileName));
         List<String> students = Arrays.asList(dataFromTxt.split("\\s*;\\s*"));
 
+        AtomicInteger validStudents = new AtomicInteger();
         result = students.stream()
                 .map(string -> {
                     try {
+                        validStudents.getAndIncrement();
                         return studentMapper.toStudent(string);
                     } catch (IllegalStudentException e) {
-                        throw new RuntimeException(e);
+                        validStudents.getAndDecrement();
+                        return null;
                     }
                 })
+                .filter(Objects::nonNull)
                 .limit(count)
                 .collect(new StudentArrayListCollector());
+
+        System.out.println("Просканировано " + validStudents + " записей из " + count);
 
         return result;
     }
