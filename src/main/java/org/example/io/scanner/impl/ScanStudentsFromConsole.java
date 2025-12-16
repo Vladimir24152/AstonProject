@@ -1,48 +1,49 @@
 package org.example.io.scanner.impl;
 
-import org.example.collection.StudentArrayList;
+import org.example.collection.StudentArrayListCollector;
 import org.example.collection.StudentList;
 import org.example.exceptions.IllegalStudentException;
 import org.example.io.scanner.ScanStudents;
+import org.example.mapper.StudentMapper;
+import org.example.mapper.StudentMapperImpl;
 import org.example.model.Student;
 
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class ScanStudentsFromConsole implements ScanStudents {
+    StudentMapper studentMapper = new StudentMapperImpl();
+    Scanner scanner = new Scanner(System.in);
+    int validStudents = 0;      // счетчик корректных студентов
+
     @Override
     public StudentList scanStudents(Integer count) {
-        Scanner scanner = new Scanner(System.in);
-        StudentList students = new StudentArrayList();
-
-        for (int i = 0; i < count; i++) {
-            String studentString = scanner.nextLine();
-            String[] elements = studentString.split("\\|");
-
-            String name = elements[0];
-            String lastName = elements[1];
-            Integer groupNumber = Integer.parseInt(elements[2]);
-            Double averageScore = Double.parseDouble(elements[3]);
-            String gradeBookNumber = elements[4];
-            Integer age = Integer.parseInt(elements[5]);
-            String address = elements[6];
-
-            Student student;
-            try {
-                student = new Student.Builder(name, lastName, groupNumber, averageScore, gradeBookNumber)
-                        .buildAge(age)
-                        .buildAddress(address)
-                        .build();
-            } catch (IllegalStudentException e) {
-                System.err.println(e.getMessage());
-                System.out.println("Попробуйте ввести данные заново");
-
-                i--;        // откат счетчика назад для новой попытки
-                continue;
-            }
-
-            students.add(student);
-        }
+        System.out.println("Введите данные студентов (в формате - имя|фамилия|группа" +
+                "|средний балл|номер зачетки|возраст|адрес;):");
+        StudentList students = Stream.generate(this::scanStudent)
+                .limit(count)
+                .collect(new StudentArrayListCollector());
 
         return students;
+    }
+
+    private Student scanStudent() {
+        Student student = null;
+
+        // цикл, пока не будет создан корректный студент
+        do {
+            try {
+                validStudents++;
+                System.out.print(validStudents + ") ");
+                String studentString = scanner.nextLine().split(";")[0];
+                student = studentMapper.toStudent(studentString);
+            } catch (IllegalStudentException e) {
+                validStudents--;
+                System.err.println(e.getMessage());
+                System.out.println("Попробуйте ввести данные заново");
+            }
+        } while (student == null);
+
+        return student;
     }
 }
