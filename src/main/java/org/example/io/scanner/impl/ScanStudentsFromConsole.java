@@ -14,9 +14,12 @@ import java.util.stream.Stream;
 public class ScanStudentsFromConsole implements ScanStudents {
     StudentMapper studentMapper = new StudentMapperImpl();
     Scanner scanner = new Scanner(System.in);
+    int validStudents = 0;      // счетчик корректных студентов
 
     @Override
     public StudentList scanStudents(Integer count) {
+        System.out.println("Введите данные студентов (в формате - имя|фамилия|группа" +
+                "|средний балл|номер зачетки|возраст|адрес;):");
         StudentList students = Stream.generate(this::scanStudent)
                 .limit(count)
                 .collect(new StudentArrayListCollector());
@@ -30,9 +33,12 @@ public class ScanStudentsFromConsole implements ScanStudents {
         // цикл, пока не будет создан корректный студент
         do {
             try {
-                String studentString = scanner.nextLine();
+                validStudents++;
+                System.out.print(validStudents + ") ");
+                String studentString = scanner.nextLine().split(";")[0];
                 student = studentMapper.toStudent(studentString);
             } catch (IllegalStudentException e) {
+                validStudents--;
                 System.err.println(e.getMessage());
                 System.out.println("Попробуйте ввести данные заново");
             }
