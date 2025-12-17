@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.collection.StudentArrayList;
 import org.example.collection.StudentList;
 import org.example.io.printer.StudentPrinter;
 import org.example.io.printer.impl.PrintStudentsToConsole;
@@ -9,7 +8,6 @@ import org.example.io.scanner.StudentScanner;
 import org.example.io.scanner.impl.ScanStudentsFromConsole;
 import org.example.io.scanner.impl.ScanStudentsFromFile;
 import org.example.io.scanner.impl.ScanStudentsRandom;
-import org.example.model.Student;
 import org.example.sorter.StudentSorter;
 import org.example.sorter.impl.BaseSortStudents;
 import org.example.sorter.impl.CustomSortStudents;
@@ -39,9 +37,11 @@ public class Main {
                 studentList = studentScanner.getStudents(countStudentForScan);
 
                 studentSorter = toChooseStudentSorter();
+                if (!isRunning) break;
                 sortedStudentList = studentSorter.sortStudents(studentList);
 
                 studentPrinter = toChooseStudentPrinter();
+                if (!isRunning) break;
                 studentPrinter.printStudents(sortedStudentList);
                 System.out.println("Список студентов отсортирован!");
                 System.out.println();
