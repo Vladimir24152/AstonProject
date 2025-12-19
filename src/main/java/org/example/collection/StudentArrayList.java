@@ -54,22 +54,35 @@ public class StudentArrayList implements StudentList, Iterable<Student>{
     }
 
     @Override
-    public Integer contains(Integer groupNumber, Integer countThread) {
+    public Integer contains(Integer groupNumber) {
 
         AtomicInteger result = new AtomicInteger(0);
 
-        for (int i = 1; i <= countThread; i++) {
-            Integer finalI = i;
-            System.out.println("создали поток " + i);
-            Thread thread = new Thread( ()-> {
-                for (int j = (size / countThread * finalI) - (size / countThread * finalI - 1); j < (size / countThread * finalI) ; j++) {
-                    if (students[j].getGroupNumber() == groupNumber) {
-                        result.incrementAndGet();
-                    }
-                }
-            });
-            thread.start();
+        Thread thread1 = new Thread( ()-> {
+            for (int i = 0; i < (size / 2); i++) {
+                if (groupNumber == students[i].getGroupNumber()){
+                    result.incrementAndGet();
+                };
+            }
+        });
+
+        Thread thread2 = new Thread( ()-> {
+            for (int i = (size / 2); i < size; i++) {
+                if (groupNumber == students[i].getGroupNumber()){
+                    result.incrementAndGet();
+                };
+            }
+        });
+
+        try {
+            thread1.start();
+            thread2.start();
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+
         return result.get();
     }
 

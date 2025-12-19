@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.collection.StudentArrayList;
 import org.example.collection.StudentList;
 import org.example.exceptions.IllegalStudentException;
 import org.example.io.printer.StudentPrinter;
@@ -30,74 +31,37 @@ public class Main {
     static BufferedReader consoleReader;
 
     public static void main(String[] args) {
-
+            consoleReader = new BufferedReader(new InputStreamReader(System.in));
         try {
-            // Создаем 10 студентов группы 101
-            for (int i = 1; i <= 10; i++) {
-                Student student = new Student.Builder(
-                        "Имя" + i,
-                        "Фамилия" + i,
-                        101,
-                        3.0 + (i % 4) * 0.5, // Оценки от 3.0 до 4.5
-                        String.format("GB%05d", i) // Номер зачетки в формате GB00001
-                )
-                        .buildAge(18 + i % 5) // Возраст от 18 до 22
-                        .buildAddress("ул. Пушкина, д. " + i)
-                        .build();
+            while (isRunning){
+                studentScanner = toChooseStudentScanner();
+                if (!isRunning) break;
+                countStudentForScan = requestingCountToScan();
+                studentList = studentScanner.getStudents(countStudentForScan);
 
-                sortedStudentList.add(student);
+                studentSorter = toChooseStudentSorter();
+                if (!isRunning) break;
+                sortedStudentList = studentSorter.sortStudents(studentList);
+
+                toChooseCountOfNumberCroup();
+
+                studentPrinter = toChooseStudentPrinter();
+                if (!isRunning) break;
+                studentPrinter.printStudents(sortedStudentList);
+                System.out.println("Список студентов отсортирован!");
+                System.out.println();
             }
-
-            // Создаем 10 студентов группы 202
-            for (int i = 11; i <= 20; i++) {
-                Student student = new Student.Builder(
-                        "Имя" + i,
-                        "Фамилия" + i,
-                        202,
-                        3.5 + ((i - 10) % 3) * 0.5, // Оценки от 3.5 до 4.5
-                        String.format("GB%05d", i) // Номер зачетки в формате GB00011
-                )
-                        .buildAge(19 + (i - 10) % 4) // Возраст от 19 до 22
-                        .buildAddress("ул. Лермонтова, д. " + (i - 10))
-                        .build();
-
-                sortedStudentList.add(student);
-            }
-        } catch (IllegalStudentException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
+        }finally {
+            if (consoleReader != null) {
+                try {
+                    consoleReader.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
-
-        System.out.println(sortedStudentList.contains(101,2));
-
-//            consoleReader = new BufferedReader(new InputStreamReader(System.in));
-//        try {
-//            while (isRunning){
-//                studentScanner = toChooseStudentScanner();
-//                if (!isRunning) break;
-//                countStudentForScan = requestingCountToScan();
-//                studentList = studentScanner.getStudents(countStudentForScan);
-//
-//                studentSorter = toChooseStudentSorter();
-//                if (!isRunning) break;
-//                sortedStudentList = studentSorter.sortStudents(studentList);
-//
-//                studentPrinter = toChooseStudentPrinter();
-//                if (!isRunning) break;
-//                studentPrinter.printStudents(sortedStudentList);
-//                System.out.println("Список студентов отсортирован!");
-//                System.out.println();
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }finally {
-//            if (consoleReader != null) {
-//                try {
-//                    consoleReader.close();
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }
     }
 
     private static StudentScanner toChooseStudentScanner() {
@@ -194,5 +158,24 @@ public class Main {
             System.out.println("Ошибка ввода: " + e.getMessage());
         }
         return "0";
+    }
+
+    private static void toChooseCountOfNumberCroup() {
+        Boolean isChoose = true;
+        while (isChoose) {
+            String string = getDataFromTheUser(
+                    "Проверить количиство студентов в группе. Введите номер группы:",
+                    "q - продолжить далее");
+            if (string.equals("q")) {
+                isChoose = false;
+                break;
+            }
+            Integer count = sortedStudentList.contains(Integer.parseInt(string));
+            if (count == 0) {
+                System.out.println("Такой группы не найдено");
+            }else {
+                System.out.println(String.format("В этой группе %d студентов", count));
+            }
+        }
     }
 }
