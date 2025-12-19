@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.collection.StudentList;
+import org.example.exceptions.IllegalStudentException;
 import org.example.io.printer.StudentPrinter;
 import org.example.io.printer.impl.PrintStudentsToConsole;
 import org.example.io.printer.impl.PrintStudentsToFile;
@@ -33,13 +34,28 @@ public class Main {
             countStudentForScan = requestingCountToScan();
             studentList = studentScanner.getStudents(countStudentForScan);
 
-            studentSorter = toChooseStudentSorter();
-            sortedStudentList = studentSorter.sortStudents(studentList);
+                studentSorter = toChooseStudentSorter();
+                if (!isRunning) break;
+                sortedStudentList = studentSorter.sortStudents(studentList);
 
-            studentPrinter = toChooseStudentPrinter();
-            studentPrinter.printStudents(sortedStudentList);
-            System.out.println("Список студентов отсортирован!");
-            System.out.println();
+                toChooseCountOfNumberCroup();
+
+                studentPrinter = toChooseStudentPrinter();
+                if (!isRunning) break;
+                studentPrinter.printStudents(sortedStudentList);
+                System.out.println("Список студентов отсортирован!");
+                System.out.println();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            if (consoleReader != null) {
+                try {
+                    consoleReader.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 
@@ -132,5 +148,24 @@ public class Main {
             System.out.println(lines[i]);
         }
         return consoleReader.nextLine();
+    }
+
+    private static void toChooseCountOfNumberCroup() {
+        Boolean isChoose = true;
+        while (isChoose) {
+            String string = getDataFromTheUser(
+                    "Проверить количиство студентов в группе. Введите номер группы:",
+                    "q - продолжить далее");
+            if (string.equals("q")) {
+                isChoose = false;
+                break;
+            }
+            Integer count = sortedStudentList.contains(Integer.parseInt(string));
+            if (count == 0) {
+                System.out.println("Такой группы не найдено");
+            }else {
+                System.out.println(String.format("В этой группе %d студентов", count));
+            }
+        }
     }
 }
