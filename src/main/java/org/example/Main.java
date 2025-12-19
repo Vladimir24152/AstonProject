@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.collection.StudentArrayList;
 import org.example.collection.StudentList;
 import org.example.exceptions.IllegalStudentException;
 import org.example.io.printer.StudentPrinter;
@@ -10,14 +9,11 @@ import org.example.io.scanner.StudentScanner;
 import org.example.io.scanner.impl.ScanStudentsFromConsole;
 import org.example.io.scanner.impl.ScanStudentsFromFile;
 import org.example.io.scanner.impl.ScanStudentsRandom;
-import org.example.model.Student;
 import org.example.sorter.StudentSorter;
 import org.example.sorter.impl.BaseSortStudents;
 import org.example.sorter.impl.CustomSortStudents;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Main {
 
@@ -28,16 +24,15 @@ public class Main {
     static StudentSorter studentSorter;
     static StudentPrinter studentPrinter;
     static Boolean isRunning = true;
-    static BufferedReader consoleReader;
+    static Scanner consoleReader;
 
     public static void main(String[] args) {
-            consoleReader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            while (isRunning){
-                studentScanner = toChooseStudentScanner();
-                if (!isRunning) break;
-                countStudentForScan = requestingCountToScan();
-                studentList = studentScanner.getStudents(countStudentForScan);
+        consoleReader = new Scanner(System.in);
+        while (isRunning){
+            studentScanner = toChooseStudentScanner();
+            if (!isRunning) break;
+            countStudentForScan = requestingCountToScan();
+            studentList = studentScanner.getStudents(countStudentForScan);
 
                 studentSorter = toChooseStudentSorter();
                 if (!isRunning) break;
@@ -152,12 +147,7 @@ public class Main {
         for (int i = 0; i < lines.length; i++){
             System.out.println(lines[i]);
         }
-        try {
-            return consoleReader.readLine();
-        } catch (IOException e) {
-            System.out.println("Ошибка ввода: " + e.getMessage());
-        }
-        return "0";
+        return consoleReader.nextLine();
     }
 
     private static void toChooseCountOfNumberCroup() {

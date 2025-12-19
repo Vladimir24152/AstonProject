@@ -7,13 +7,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 public class TxtUtils {
-
     private static final String workDirPath = String.format(
             "%s\\src\\main\\resources\\",
             System.getProperty("user.dir")
     );
 
-    private static boolean checkFileExists(String fileName) {
+    public static boolean checkFileExists(String fileName) {
         Path path = Paths.get(String.format(
                 "%s%s.txt",
                 workDirPath,
@@ -22,7 +21,7 @@ public class TxtUtils {
         return Files.exists(path);
     }
 
-    private static void createFile(String fileName) {
+    public static void createFile(String fileName) {
         try {
             Path path = Paths.get(String.format(
                     "%s%s.txt",

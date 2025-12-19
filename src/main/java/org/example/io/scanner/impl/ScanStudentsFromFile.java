@@ -7,11 +7,12 @@ import org.example.exceptions.IllegalStudentException;
 import org.example.io.TxtUtils;
 import org.example.io.scanner.ScanStudents;
 import org.example.mapper.StudentMapperImpl;
-import org.example.model.Student;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ScanStudentsFromFile implements ScanStudents {
 
@@ -28,38 +29,23 @@ public class ScanStudentsFromFile implements ScanStudents {
         String dataFromTxt = TxtUtils.readFile(String.format("%s", fileName));
         List<String> students = Arrays.asList(dataFromTxt.split("\\s*;\\s*"));
 
+        AtomicInteger validStudents = new AtomicInteger();
         result = students.stream()
-                .map(string -> studentMapper.toStudent(string))
+                .map(string -> {
+                    try {
+                        validStudents.getAndIncrement();
+                        return studentMapper.toStudent(string);
+                    } catch (IllegalStudentException e) {
+                        validStudents.getAndDecrement();
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
                 .limit(count)
                 .collect(new StudentArrayListCollector());
 
-//        for (int i = 0; i < count; i++) {
-//            if (i == students.size()) {
-//                break;
-//            }
-//            String[] element = students.get(i).split("\\|");
-//
-//            String name = element[0];
-//            String lastname = element[1];
-//            Integer groupNumber = Integer.valueOf(element[2]);
-//            Double averageScore = Double.valueOf(element[3]);
-//            String gradeBookNumber = element[4];
-//            Integer age = Integer.valueOf(element[5]);
-//            String address = element[6];
-//
-//            // Создаю объект Student
-//            Student student;
-//            try {
-//                student = new Student.Builder(name, lastname, groupNumber, averageScore, gradeBookNumber)
-//                        .buildAge(age)
-//                        .buildAddress(address)
-//                        .build();
-//            } catch (IllegalStudentException e) {
-//                throw new RuntimeException(e);
-//            }
-//            // Добавить студента в коллекцию
-//            result.add(student);
-//        }
+        System.out.println("Просканировано " + validStudents + " записей из " + count);
+
         return result;
     }
 }

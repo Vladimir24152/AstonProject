@@ -48,8 +48,8 @@ public class Student implements Comparable<Student>{
 
 //        Методы build для необязательных полей
         public Builder buildAge(Integer age) throws IllegalStudentException {
-            if (age < 0)
-                throw new IllegalStudentException("Возраст должен быть как минимум больше нуля");
+            if (age < 16)
+                throw new IllegalStudentException("Возраст должен быть больше или равен 16");
             this.age = age;
 
             return this;
@@ -84,15 +84,13 @@ public class Student implements Comparable<Student>{
 
     @Override
     public String toString() {
-        return "Student{" +
-                "name='" + name + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", groupNumber=" + groupNumber +
-                ", averageScore=" + averageScore +
-                ", gradeBookNumber='" + gradeBookNumber + '\'' +
-                ", age=" + age +
-                ", address='" + address + '\'' +
-                '}';
+        return  name + '|' +
+                lastname + '|' +
+                groupNumber + '|' +
+                averageScore + '|' +
+                gradeBookNumber + '|' +
+                age + '|' +
+                address + ';';
     }
 
     @Override
