@@ -15,4 +15,6 @@ public interface StudentList {
     Integer size();
 
     Stream<Student> stream();
+
+    Integer contains(Integer groupNumber, Integer countThread);
 }

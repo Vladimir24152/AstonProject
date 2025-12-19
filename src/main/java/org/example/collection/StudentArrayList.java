@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.StreamSupport;
 
@@ -50,6 +51,26 @@ public class StudentArrayList implements StudentList, Iterable<Student>{
     @Override
     public Iterator<Student> iterator() {
         return new StudentIterator();
+    }
+
+    @Override
+    public Integer contains(Integer groupNumber, Integer countThread) {
+
+        AtomicInteger result = new AtomicInteger(0);
+
+        for (int i = 1; i <= countThread; i++) {
+            Integer finalI = i;
+            System.out.println("создали поток " + i);
+            Thread thread = new Thread( ()-> {
+                for (int j = (size / countThread * finalI) - (size / countThread * finalI - 1); j < (size / countThread * finalI) ; j++) {
+                    if (students[j].getGroupNumber() == groupNumber) {
+                        result.incrementAndGet();
+                    }
+                }
+            });
+            thread.start();
+        }
+        return result.get();
     }
 
     private class StudentIterator implements Iterator<Student> {
