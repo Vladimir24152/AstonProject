@@ -42,11 +42,4 @@ public class ScanStudentsRandom implements ScanStudents {
             throw new RuntimeException(e);
         }
     }
-
-    public static void main(String[] args) {
-        ScanStudentsRandom scanStudentsRandom = new ScanStudentsRandom();
-
-        scanStudentsRandom.scanStudents(100).stream().forEach(System.out::println);
-
-    }
 }
