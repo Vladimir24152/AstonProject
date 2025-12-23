@@ -1,5 +1,6 @@
 package org.example.io.scanner.impl;
 
+import org.example.collection.StudentArrayList;
 import org.example.collection.StudentArrayListCollector;
 import org.example.collection.StudentList;
 import org.example.exceptions.IllegalStudentException;
@@ -18,6 +19,9 @@ public class ScanStudentsFromConsole implements ScanStudents {
 
     @Override
     public StudentList scanStudents(Integer count) {
+        if (count < 0)
+            return new StudentArrayList();
+
         System.out.println("Введите данные студентов (в формате - имя|фамилия|группа" +
                 "|средний балл|номер зачетки|возраст|адрес;):");
         StudentList students = Stream.generate(this::scanStudent)
@@ -40,6 +44,11 @@ public class ScanStudentsFromConsole implements ScanStudents {
             } catch (IllegalStudentException e) {
                 validStudents--;
                 System.err.println(e.getMessage());
+                System.out.println("Попробуйте ввести данные заново");
+            } catch (NumberFormatException e) {
+                validStudents--;
+                System.err.println("Вы допустили иные символы, кроме цифр, в некоторых полях " +
+                        "(номер группы, средний бал, возраст)");
                 System.out.println("Попробуйте ввести данные заново");
             }
         } while (student == null);
