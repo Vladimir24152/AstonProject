@@ -45,6 +45,11 @@ public class ScanStudentsFromConsole implements ScanStudents {
                 validStudents--;
                 System.err.println(e.getMessage());
                 System.out.println("Попробуйте ввести данные заново");
+            } catch (NumberFormatException e) {
+                validStudents--;
+                System.err.println("Вы допустили иные символы, кроме цифр, в некоторых полях " +
+                        "(номер группы, средний бал, возраст)");
+                System.out.println("Попробуйте ввести данные заново");
             }
         } while (student == null);
 

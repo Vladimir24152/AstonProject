@@ -27,10 +27,14 @@ public class Student implements Comparable<Student>{
 
             if (name.length() < 2)
                 throw new IllegalStudentException("Имя должно быть не менее 2 символов");
+            if (name.matches(".*\\d.*"))
+                throw new IllegalStudentException("Имя не может содержать цифры");
             this.name = name;
 
             if (lastname.length() < 2)
                 throw new IllegalStudentException("Фамилия должна быть не менее 2 символов");
+            if (lastname.matches(".*\\d.*"))
+                throw new IllegalStudentException("Фамилия не может содержать цифры");
             this.lastname = lastname;
 
             if (groupNumber <= 0)

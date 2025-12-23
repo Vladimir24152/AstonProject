@@ -5,7 +5,7 @@ import org.example.model.Student;
 
 public class StudentMapperImpl implements StudentMapper{
 
-    public Student toStudent(String string) throws IllegalStudentException {
+    public Student toStudent(String string) throws IllegalStudentException, NumberFormatException {
 
         String[] elements = string.split(";")[0].split("\\|");
         if (elements.length < 5)
