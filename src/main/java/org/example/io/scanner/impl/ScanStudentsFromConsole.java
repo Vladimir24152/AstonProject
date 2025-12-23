@@ -1,5 +1,6 @@
 package org.example.io.scanner.impl;
 
+import org.example.collection.StudentArrayList;
 import org.example.collection.StudentArrayListCollector;
 import org.example.collection.StudentList;
 import org.example.exceptions.IllegalStudentException;
@@ -18,6 +19,9 @@ public class ScanStudentsFromConsole implements ScanStudents {
 
     @Override
     public StudentList scanStudents(Integer count) {
+        if (count < 0)
+            return new StudentArrayList();
+
         System.out.println("Введите данные студентов (в формате - имя|фамилия|группа" +
                 "|средний балл|номер зачетки|возраст|адрес;):");
         StudentList students = Stream.generate(this::scanStudent)
