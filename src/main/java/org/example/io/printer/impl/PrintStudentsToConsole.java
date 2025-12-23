@@ -6,6 +6,9 @@ import org.example.io.printer.PrintStudents;
 public class PrintStudentsToConsole implements PrintStudents {
     @Override
     public void printStudents(StudentList studentList) {
-        studentList.stream().forEach(System.out::println);
+        if (studentList.size() > 0)
+            studentList.stream().forEach(System.out::println);
+        else
+            System.out.println("Не было найдено студентов!");
     }
 }
