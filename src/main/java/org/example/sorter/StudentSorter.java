@@ -10,10 +10,6 @@ public class StudentSorter {
         this.sortStudents = sortStudents;
     }
 
-    public void setSortStudents(SortStudents sortStudents) {
-        this.sortStudents = sortStudents;
-    }
-
     public StudentList sortStudents(StudentList studentList) {
         return sortStudents.sortStudents(studentList);
     }

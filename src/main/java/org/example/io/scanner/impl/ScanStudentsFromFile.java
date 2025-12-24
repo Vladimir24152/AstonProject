@@ -16,14 +16,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ScanStudentsFromFile implements ScanStudents {
 
-    StudentMapper studentMapper = new StudentMapperImpl();
+    private StudentMapper studentMapper = new StudentMapperImpl();
+
+    Scanner scanner = new Scanner(System.in);
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     @Override
     public StudentList scanStudents(Integer count) {
         StudentList result;
 
         System.out.println("Введите название файла, без расширения:");
-        Scanner scanner = new Scanner(System.in);
         String fileName = scanner.nextLine();
 
         String dataFromTxt = TxtUtils.readFile(String.format("%s", fileName));

@@ -1,13 +1,11 @@
 package org.example.io.scanner.impl;
 
-import org.example.collection.StudentArrayList;
 import org.example.collection.StudentArrayListCollector;
 import org.example.collection.StudentList;
 import org.example.exceptions.IllegalStudentException;
 import org.example.io.scanner.ScanStudents;
 import org.example.model.Student;
 import java.util.Random;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ScanStudentsRandom implements ScanStudents {

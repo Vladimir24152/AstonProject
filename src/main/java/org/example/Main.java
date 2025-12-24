@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.collection.StudentArrayList;
 import org.example.collection.StudentList;
 import org.example.exceptions.IllegalStudentException;
 import org.example.io.printer.StudentPrinter;
@@ -46,7 +47,7 @@ public class Main {
             System.out.println("Список студентов отсортирован!");
             System.out.println();
         }
-}
+    }
 
 private static StudentScanner toChooseStudentScanner() {
     while (isRunning) {
@@ -67,7 +68,7 @@ private static StudentScanner toChooseStudentScanner() {
                 isRunning = false;
                 break;
             default:
-                System.out.println("Ведено неверное значение, повторите попытку");
+                System.err.println("Ведено неверное значение, повторите попытку");
         }
     }
     return null;
@@ -103,7 +104,7 @@ private static StudentSorter toChooseStudentSorter() {
                 isRunning = false;
                 break;
             default:
-                System.out.println("Ведено неверное значение, повторите попытку");
+                System.err.println("Ведено неверное значение, повторите попытку");
         }
     }
     return null;
@@ -126,7 +127,7 @@ private static StudentPrinter toChooseStudentPrinter() {
                 isRunning = false;
                 break;
             default:
-                System.out.println("Ведено неверное значение, повторите попытку");
+                System.err.println("Ведено неверное значение, повторите попытку");
         }
     }
     return null;
@@ -149,11 +150,15 @@ private static void toChooseCountOfNumberCroup() {
             isChoose = false;
             break;
         }
-        Integer count = sortedStudentList.contains(Integer.parseInt(string));
-        if (count == 0) {
-            System.out.println("Такой группы не найдено");
-        }else {
-            System.out.println(String.format("В этой группе %d студентов", count));
+        try {
+            Integer count = sortedStudentList.contains(Integer.parseInt(string));
+            if (count == 0) {
+                System.out.println("Такой группы не найдено");
+            }else {
+                System.out.println(String.format("В этой группе %d студентов", count));
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Ведено неверное значение, повторите попытку");
         }
     }
 }
