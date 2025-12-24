@@ -2,6 +2,8 @@ package org.example.model;
 
 import org.example.exceptions.IllegalStudentException;
 
+import java.util.Objects;
+
 public class Student implements Comparable<Student>{
 
     private String name;
@@ -80,6 +82,18 @@ public class Student implements Comparable<Student>{
 
     public Integer getGroupNumber() {
         return groupNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(name, student.name) && Objects.equals(lastname, student.lastname) && Objects.equals(groupNumber, student.groupNumber) && Objects.equals(averageScore, student.averageScore) && Objects.equals(gradeBookNumber, student.gradeBookNumber) && Objects.equals(age, student.age) && Objects.equals(address, student.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, lastname, groupNumber, averageScore, gradeBookNumber, age, address);
     }
 
     @Override

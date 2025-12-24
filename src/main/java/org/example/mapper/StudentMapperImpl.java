@@ -9,6 +9,10 @@ public class StudentMapperImpl implements StudentMapper{
 
         String[] element = string.split("\\|");
 
+        if (element.length < 5) { // Минимальное количество полей
+            throw new IllegalStudentException("Недостаточно данных в строке: " + element);
+        }
+
         String name = element[0];
         String lastname = element[1];
         Integer groupNumber = Integer.valueOf(element[2]);
