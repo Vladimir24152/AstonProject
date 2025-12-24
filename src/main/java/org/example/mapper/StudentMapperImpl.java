@@ -7,25 +7,28 @@ public class StudentMapperImpl implements StudentMapper{
 
     public Student toStudent(String string) throws IllegalStudentException {
 
-        String[] element = string.split("\\|");
+        String[] elements = string.split(";")[0].split("\\|");
+        if (elements.length < 5)
+            throw new IllegalStudentException("Были некоректно введены данные");
 
-        if (element.length < 5) { // Минимальное количество полей
-            throw new IllegalStudentException("Недостаточно данных в строке: " + element);
+        String name = elements[0];
+        String lastname = elements[1];
+        Integer groupNumber = Integer.valueOf(elements[2]);
+        Double averageScore = Double.valueOf(elements[3]);
+        String gradeBookNumber = elements[4];
+
+        Student.Builder studentBuilder = new Student.Builder(name, lastname, groupNumber, averageScore, gradeBookNumber);
+
+        if (elements.length > 5) {
+            Integer age = Integer.valueOf(elements[5]);
+            studentBuilder.buildAge(age);
         }
 
-        String name = element[0];
-        String lastname = element[1];
-        Integer groupNumber = Integer.valueOf(element[2]);
-        Double averageScore = Double.valueOf(element[3]);
-        String gradeBookNumber = element[4];
-        Integer age = Integer.valueOf(element[5]);
-        String address = element[6];
+        if (elements.length > 6) {
+            String address = elements[6];
+            studentBuilder.buildAddress(address);
+        }
 
-        Student student = new Student.Builder(name, lastname, groupNumber, averageScore, gradeBookNumber)
-                .buildAge(age)
-                .buildAddress(address)
-                .build();
-
-        return student;
+        return studentBuilder.build();
     }
 }
