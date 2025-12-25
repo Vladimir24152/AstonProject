@@ -14,10 +14,6 @@ public class PrintStudentsToFile implements PrintStudents {
         this.scanner = new Scanner(System.in);
     }
 
-    public PrintStudentsToFile(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
     public void setScanner(Scanner scanner) {
         this.scanner = scanner;
     }

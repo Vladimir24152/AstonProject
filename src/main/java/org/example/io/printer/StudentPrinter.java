@@ -9,11 +9,6 @@ public class StudentPrinter {
         this.printStudents = printStudents;
     }
 
-    public void setPrintStudents(PrintStudents printStudents) {
-        this.printStudents = printStudents;
-    }
-
-
     public void printStudents(StudentList sortedStudentList) {
         printStudents.printStudents(sortedStudentList);
     }
