@@ -20,7 +20,7 @@ class StudentListTest {
     void setUp(){
         try {
             studentList = new StudentArrayList();
-            testStudent = new Student.Builder("name1","lastname1", 101, 4.1,"1111111")
+            testStudent = new Student.Builder("name","lastname", 101, 4.1,"1111111")
                     .buildAge(20)
                     .buildAddress("address1")
                     .build();

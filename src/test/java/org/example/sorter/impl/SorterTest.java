@@ -17,8 +17,8 @@ public class SorterTest {
     void setUp(){
         try {
             for (int i = 10; i > 0; i--){
-                studentList.add(new Student.Builder("name" + i,
-                        "lastname" + i,
+                studentList.add(new Student.Builder("name",
+                        "lastname",
                         100 + i,
                         2.1 + (i / 10),
                         Integer.toString(1000000 + i))
