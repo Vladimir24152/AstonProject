@@ -13,9 +13,9 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class ScanStudentsFromConsole implements ScanStudents {
-    StudentMapper studentMapper = new StudentMapperImpl();
-    Scanner scanner = new Scanner(System.in);
-    int validStudents = 0;      // счетчик корректных студентов
+    private StudentMapper studentMapper = new StudentMapperImpl();
+    private Scanner scanner = new Scanner(System.in);
+    private int validStudents = 0;      // счетчик корректных студентов
 
     @Override
     public StudentList scanStudents(Integer count) {
