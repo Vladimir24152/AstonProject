@@ -20,19 +20,20 @@ public class SortedUtil {
     private static void merge(Student[] source, int left, int mid, int right) {
         Student[] temp = new Student[right - left + 1];
 
+        int i = left;
         int j = mid + 1;
         int k = 0;
 
-        while (left <= mid && j <= right) {
-            if (source[left].compareTo(source[j]) <= 0) {
-                temp[k++] = source[left++];
+        while (i <= mid && j <= right) {
+            if (source[i].compareTo(source[j]) <= 0) {
+                temp[k++] = source[i++];
             } else {
                 temp[k++] = source[j++];
             }
         }
 
-        while (left <= mid) {
-            temp[k++] = source[left++];
+        while (i <= mid) {
+            temp[k++] = source[i++];
         }
 
         while (j <= right) {
