@@ -40,7 +40,7 @@ public class ScanStudentsFromFile implements ScanStudents {
                     try {
                         validStudents.getAndIncrement();
                         return studentMapper.toStudent(string);
-                    } catch (IllegalStudentException e) {
+                    } catch (IllegalStudentException | NumberFormatException e) {
                         validStudents.getAndDecrement();
                         return null;
                     }
