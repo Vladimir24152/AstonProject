@@ -18,7 +18,7 @@ public class ScanStudentsFromFile implements ScanStudents {
 
     private StudentMapper studentMapper = new StudentMapperImpl();
 
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     public void setScanner(Scanner scanner) {
         this.scanner = scanner;

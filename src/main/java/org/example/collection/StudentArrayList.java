@@ -60,7 +60,7 @@ public class StudentArrayList implements StudentList, Iterable<Student>{
 
         Thread thread1 = new Thread( ()-> {
             for (int i = 0; i < (size / 2); i++) {
-                if (groupNumber == students[i].getGroupNumber()){
+                if (groupNumber.equals(students[i].getGroupNumber())){
                     result.incrementAndGet();
                 };
             }
@@ -68,7 +68,7 @@ public class StudentArrayList implements StudentList, Iterable<Student>{
 
         Thread thread2 = new Thread( ()-> {
             for (int i = (size / 2); i < size; i++) {
-                if (groupNumber == students[i].getGroupNumber()){
+                if (groupNumber.equals(students[i].getGroupNumber())){
                     result.incrementAndGet();
                 };
             }

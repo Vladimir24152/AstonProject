@@ -6,27 +6,39 @@ public class SortedUtil {
 
     public static Student[] mergeSort(Student[] source, int left, int right) {
 
-        int delimiter = left + ((right - left) / 2) + 1;
+        if (left < right) {
+            int mid = left + (right - left) / 2;
 
-        if (delimiter > 0 && right > (left + 1)) {
-            mergeSort(source, left, delimiter - 1);
-            mergeSort(source, delimiter, right);
+            mergeSort(source, left, mid);
+            mergeSort(source, mid + 1, right);
+
+            merge(source, left, mid, right);
         }
+        return source;
+    }
 
-        Student[] buffer = new Student[right - left + 1];
+    private static void merge(Student[] source, int left, int mid, int right) {
+        Student[] temp = new Student[right - left + 1];
 
-        int cursor = left;
-        for (int i = 0; i < buffer.length; i++) {
+        int j = mid + 1;
+        int k = 0;
 
-            if (delimiter > right || source[cursor].compareTo(source[delimiter]) < 0) {
-                buffer[i] = source[cursor];
-                cursor++;
+        while (left <= mid && j <= right) {
+            if (source[left].compareTo(source[j]) <= 0) {
+                temp[k++] = source[left++];
             } else {
-                buffer[i] = source[delimiter];
-                delimiter++;
+                temp[k++] = source[j++];
             }
         }
-        System.arraycopy(buffer, 0, source, left, buffer.length);
-        return source;
+
+        while (left <= mid) {
+            temp[k++] = source[left++];
+        }
+
+        while (j <= right) {
+            temp[k++] = source[j++];
+        }
+
+        System.arraycopy(temp, 0, source, left, temp.length);
     }
 }

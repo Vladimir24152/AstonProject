@@ -10,10 +10,6 @@ public class StudentScanner {
         this.scanStudents = scanStudents;
     }
 
-    public void setScanStudents(ScanStudents scanStudents) {
-        this.scanStudents = scanStudents;
-    }
-
     public StudentList getStudents(Integer count){
         return scanStudents.scanStudents(count);
     }

@@ -14,6 +14,10 @@ public class BaseSortStudents implements SortStudents {
     @Override
     public StudentList sortStudents(StudentList studentList) {
 
+        if (studentList == null || studentList.size() == 0) {
+            return studentList;
+        }
+
         Student[] arrayStudents = new Student[studentList.size()];
         for (int i = 0;i < arrayStudents.length; i++){
             arrayStudents[i] = studentList.get(i);

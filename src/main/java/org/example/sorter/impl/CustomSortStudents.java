@@ -11,6 +11,10 @@ public class CustomSortStudents implements SortStudents {
     @Override
     public StudentList sortStudents(StudentList studentList) {
 
+        if (studentList == null || studentList.size() == 0) {
+            return studentList;
+        }
+
         Student[] arrayStudents = new Student[studentList.size()];
         int countOfIndex = 0;
         int[] indexes = new int[studentList.size()];
