@@ -18,14 +18,14 @@ import java.util.Scanner;
 
 public class Main {
 
-    static StudentScanner studentScanner ;
-    static StudentList studentList;
-    static Integer countStudentForScan;
-    static StudentList sortedStudentList;
-    static StudentSorter studentSorter;
-    static StudentPrinter studentPrinter;
-    static Boolean isRunning = true;
-    static Scanner consoleReader;
+    private static StudentScanner studentScanner ;
+    private static StudentList studentList;
+    private static Integer countStudentForScan;
+    private static StudentList sortedStudentList;
+    private static StudentSorter studentSorter;
+    private static StudentPrinter studentPrinter;
+    private static Boolean isRunning = true;
+    private static Scanner consoleReader;
 
     public static void main(String[] args) {
         consoleReader = new Scanner(System.in);
