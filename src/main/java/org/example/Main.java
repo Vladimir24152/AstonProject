@@ -141,13 +141,11 @@ private static String getDataFromTheUser(String ... lines){
 }
 
 private static void toChooseCountOfNumberCroup() {
-    Boolean isChoose = true;
-    while (isChoose) {
+    while (true) {
         String string = getDataFromTheUser(
                 "Проверить количиство студентов в группе. Введите номер группы:",
                 "q - продолжить далее");
         if (string.equals("q")) {
-            isChoose = false;
             break;
         }
         try {

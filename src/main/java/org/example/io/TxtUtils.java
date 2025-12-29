@@ -11,21 +11,13 @@ public class TxtUtils {
     private static final String WORK_DIR_PATH;
 
     public static boolean checkFileExists(String fileName) {
-        Path path = Paths.get(String.format(
-                "%s%s.txt",
-                WORK_DIR_PATH,
-                fileName)
-        );
+        Path path = toPath(fileName);
         return Files.exists(path);
     }
 
     public static void createFile(String fileName) {
         try {
-            Path path = Paths.get(String.format(
-                    "%s%s.txt",
-                    WORK_DIR_PATH,
-                    fileName)
-            );
+            Path path = toPath(fileName);
             Files.createFile(path);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -34,11 +26,7 @@ public class TxtUtils {
 
     public static String readFile(String fileName) {
         try {
-            Path path = Paths.get(String.format(
-                    "%s%s.txt",
-                    WORK_DIR_PATH,
-                    fileName)
-            );
+            Path path = toPath(fileName);
             return Files.readString(path, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,18 +35,12 @@ public class TxtUtils {
     }
 
     public static void writeLine(String line, String fileName) {
-        // 1. check file exists
-        // 2. append
         if (!checkFileExists(fileName)) {
             createFile(fileName);
         }
 
         try {
-            Path path = Paths.get(String.format(
-                    "%s%s.txt",
-                    WORK_DIR_PATH,
-                    fileName)
-            );
+            Path path = toPath(fileName);
 
             String newLine = line + "\n";
 
@@ -75,5 +57,13 @@ public class TxtUtils {
         } else {
             WORK_DIR_PATH = userDir + "/src/main/resources/";
         }
+    }
+
+    private static Path toPath(String fileName){
+        return Paths.get(String.format(
+                "%s%s.txt",
+                WORK_DIR_PATH,
+                fileName)
+        );
     }
 }
